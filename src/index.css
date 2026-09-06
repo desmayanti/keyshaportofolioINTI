@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -41,6 +41,10 @@
     --glow-gold: 43 100% 55%;
     --dark-gray: 0 0% 10%;
     --mid-gray: 0 0% 20%;
+
+    /* Bento theme colors */
+    --cream: 40 33% 92%;
+    --cream-dim: 30 15% 72%;
   }
 
   .dark {
@@ -76,19 +80,39 @@
   }
 
   body {
-    @apply bg-background text-foreground font-poppins;
-    background: linear-gradient(135deg, 
-      hsl(0 0% 3%) 0%, 
-      hsl(0 0% 8%) 25%, 
-      hsl(0 10% 6%) 50%, 
-      hsl(0 0% 5%) 75%, 
-      hsl(0 0% 3%) 100%
-    );
+    @apply font-poppins text-[#E8DDD3] antialiased;
+    background: radial-gradient(ellipse at center, #F37100, #D92200, #5A0006);
     background-attachment: fixed;
+    min-height: 100vh;
   }
 }
 
 @layer utilities {
+  /* ── Bento Card Glassmorphism ────────────────────────── */
+  .bento-card {
+    @apply bg-black/30 backdrop-blur-md border border-white/20 rounded-3xl overflow-hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .bento-card:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.08), 0 0 40px rgba(243, 113, 0, 0.1);
+  }
+
+  /* ── Heading & Text Colors ──────────────────────────── */
+  .heading-cream {
+    color: #F5EDE4;
+  }
+
+  .text-cream {
+    color: #E8DDD3;
+  }
+
+  .text-cream-dim {
+    color: #BFB0A0;
+  }
+
+  /* ── Glow Utilities (preserved) ─────────────────────── */
   .text-glow-red {
     text-shadow: 0 0 10px hsl(var(--glow-red) / 0.8),
                  0 0 20px hsl(var(--glow-red) / 0.6),
@@ -161,6 +185,16 @@
       transparent 70%
     );
   }
+
+  /* ── Glassmorphic form inputs ───────────────────────── */
+  .glass-input {
+    @apply bg-white/5 border border-white/20 text-[#F5EDE4] placeholder:text-white/40 rounded-xl;
+    backdrop-filter: blur(8px);
+  }
+
+  .glass-input:focus {
+    @apply border-white/40 ring-1 ring-white/20;
+  }
 }
 
 /* Custom animations */
@@ -219,14 +253,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: #2A0000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
+  background: #F37100;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
+  background: #D92200;
 }

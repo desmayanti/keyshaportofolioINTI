@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -38,19 +39,18 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/90 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
-      }`}
+    <motion.nav
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent border-none shadow-none"
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center box-glow-red">
-              <span className="text-primary-foreground font-bold text-xl">K</span>
+            <div className="w-10 h-10 rounded-lg bg-[#F37100] flex items-center justify-center shadow-[0_0_15px_rgba(243,113,0,0.4)]">
+              <span className="text-white font-display text-xl tracking-wider">K</span>
             </div>
           </a>
 
@@ -62,8 +62,8 @@ const Navbar = () => {
                 href={link.href}
                 className={`text-sm font-medium transition-all duration-300 ${
                   activeSection === link.href.substring(1)
-                    ? "text-primary text-glow-red"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-[#F37100]"
+                    : "text-cream-dim hover:text-[#F5EDE4]"
                 }`}
               >
                 {link.name}
@@ -83,7 +83,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground"
+            className="md:hidden text-[#F5EDE4]"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -92,7 +92,12 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border pt-4">
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden mt-4 pb-4 border-t border-white/10 pt-4"
+          >
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
@@ -101,8 +106,8 @@ const Navbar = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`text-sm font-medium transition-all duration-300 ${
                     activeSection === link.href.substring(1)
-                      ? "text-primary text-glow-red"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "text-[#F37100]"
+                      : "text-cream-dim hover:text-[#F5EDE4]"
                   }`}
                 >
                   {link.name}
@@ -119,10 +124,10 @@ const Navbar = () => {
                 Contact Me
               </Button>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

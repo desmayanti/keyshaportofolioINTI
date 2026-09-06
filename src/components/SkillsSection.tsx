@@ -1,102 +1,120 @@
-import { Code, Palette, Globe, Database, Smartphone, Lightbulb } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const skills = [
-  {
-    icon: Code,
-    title: "Web Development",
-    description: "Building responsive and modern websites using HTML, CSS, JavaScript, and popular frameworks.",
-    color: "primary",
-  },
-  {
-    icon: Palette,
-    title: "UI/UX Design",
-    description: "Creating beautiful and user-friendly interfaces with attention to detail and user experience.",
-    color: "accent",
-  },
-  {
-    icon: Database,
-    title: "Database Management",
-    description: "Managing and organizing data efficiently using SQL and modern database systems.",
-    color: "primary",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile Development",
-    description: "Learning to develop mobile applications for Android and cross-platform solutions.",
-    color: "accent",
-  },
-  {
-    icon: Globe,
-    title: "Backend Development",
-    description: "Understanding server-side programming and API development fundamentals.",
-    color: "primary",
-  },
-  {
-    icon: Lightbulb,
-    title: "Problem Solving",
-    description: "Analytical thinking and creative solutions for complex programming challenges.",
-    color: "accent",
-  },
-];
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { 
+  MonitorSmartphone, Code2, Paintbrush, Database, Figma, Terminal, 
+  Server, Layers, Cpu, Github, PenTool, Laptop
+} from "lucide-react";
 
 const SkillsSection = () => {
-  return (
-    <section id="skills" className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            My <span className="text-primary text-glow-red">Skills</span>
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full box-glow-red" />
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Here are the skills I'm developing as a PPLG student at SMKN 1 Ciomas
-          </p>
-        </div>
+  const ref = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"], // Track while this section is anywhere in viewport
+  });
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              className={`group p-6 rounded-xl card-gradient border border-border hover:border-${skill.color} transition-all duration-500 cursor-default relative overflow-hidden`}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Glow Effect on Hover */}
-              <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                skill.color === "primary" ? "bg-primary/5" : "bg-accent/5"
-              }`} />
-              
-              <div className="relative z-10">
-                <div className={`w-16 h-16 rounded-xl mb-4 flex items-center justify-center transition-all duration-300 ${
-                  skill.color === "primary" 
-                    ? "bg-primary/10 group-hover:bg-primary/20 group-hover:box-glow-red" 
-                    : "bg-accent/10 group-hover:bg-accent/20 group-hover:box-glow-gold"
-                }`}>
-                  <skill.icon className={`w-8 h-8 ${
-                    skill.color === "primary" ? "text-primary" : "text-accent"
-                  }`} />
-                </div>
-                
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {skill.title}
-                </h3>
-                
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                  {skill.description}
-                </p>
-                
-                <Button 
-                  variant="glow" 
-                  size="sm" 
-                  className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+  // Map vertical scroll to horizontal movement for the massive background text
+  const textX = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
+  const skills = [
+    { name: "React.js", icon: MonitorSmartphone },
+    { name: "Tailwind CSS", icon: Paintbrush },
+    { name: "PHP", icon: Server },
+    { name: "MySQL", icon: Database },
+    { name: "Figma", icon: Figma },
+    { name: "JavaScript", icon: Code2 },
+    { name: "HTML5 & CSS3", icon: Layers },
+    { name: "Node.js (Basic)", icon: Cpu },
+    { name: "Git & GitHub", icon: Github },
+    { name: "UI Prototyping", icon: PenTool },
+    { name: "Responsive Design", icon: Laptop },
+    { name: "REST APIs", icon: Terminal },
+  ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      transition: { type: "spring", stiffness: 400, damping: 10 } // Explosive burst stagger
+    }
+  };
+
+  return (
+    <section 
+      ref={ref} 
+      id="skills" 
+      className="relative z-30 w-full min-h-screen flex flex-col items-center justify-center overflow-hidden border-none rounded-none py-32"
+    >
+      {/* Background Massive Text (Horizontal Parallax) */}
+      <motion.div 
+        style={{ x: textX }}
+        className="absolute inset-0 flex items-center justify-center w-full h-full z-0 pointer-events-none whitespace-nowrap opacity-20"
+      >
+        <h1 className="text-[20vw] md:text-[25vw] font-display text-[#FDF8E1] tracking-tighter leading-none select-none">
+          MY SKILLS - TECH STACK -
+        </h1>
+      </motion.div>
+
+      {/* Foreground Content - The Floating Cluster */}
+      <div className="relative z-10 w-full px-4 md:px-8 flex flex-col items-center">
+        <div className="w-full max-w-[80rem] mx-auto py-8">
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="font-display text-3xl md:text-5xl tracking-wider text-white drop-shadow-lg mb-3">
+              TECH <span className="text-[#FDF8E1]">STACK</span>
+            </h2>
+            <div className="w-16 h-1 bg-white mx-auto rounded-full drop-shadow-md" />
+            <p className="text-white/60 mt-6 font-poppins max-w-2xl mx-auto text-sm md:text-lg">
+              The tools and technologies I wield to bring digital ideas to life, freely floating in my digital space.
+            </p>
+          </div>
+
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto"
+          >
+            {skills.map((skill, index) => {
+              const randomDuration = 4 + (index % 3);
+              return (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="relative group cursor-pointer"
                 >
-                  Learn More
-                </Button>
-              </div>
-            </div>
-          ))}
+                  <motion.div
+                    animate={{ y: [0, -10, 0], rotate: [0, 2, -2, 0] }}
+                    transition={{ repeat: Infinity, duration: randomDuration, ease: "easeInOut" }}
+                    whileHover={{ 
+                      scale: 1.15, 
+                      backgroundColor: "rgba(255,255,255,0.1)", 
+                      zIndex: 50, 
+                      transition: { type: "spring", stiffness: 400, damping: 10 } 
+                    }}
+                    className="px-6 py-4 md:px-8 md:py-5 bg-white/5 border border-white/10 rounded-full flex items-center gap-3 backdrop-blur-md shadow-xl"
+                  >
+                    <skill.icon className="w-5 h-5 md:w-6 md:h-6 text-white drop-shadow-md" />
+                    <span className="text-white font-poppins font-medium text-sm md:text-base drop-shadow-md whitespace-nowrap">
+                      {skill.name}
+                    </span>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </div>
     </section>

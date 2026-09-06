@@ -1,105 +1,124 @@
-import { ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import projectCanuraniruang from "@/assets/project-canuraniruang.png";
-import projectDietyuk from "@/assets/project-dietyuk.png";
-
-const projects = [
-  {
-    title: "CANURANIRUANG",
-    category: "Web Application",
-    description: "Sistem Aspirasi Warga - Platform untuk menyampaikan keluhan dan aspirasi warga dengan dashboard admin lengkap.",
-    image: projectCanuraniruang,
-    tags: ["HTML", "CSS", "JavaScript", "Bootstrap"],
-    demoUrl: "https://desmayanti.github.io/CANURANIRUANG/pages/admin_dashboard.html",
-    githubUrl: "https://github.com/desmayanti/CANURANIRUANG.git",
-  },
-  {
-    title: "DietYuk",
-    category: "Health & Fitness Web App",
-    description: "Aplikasi pelacakan diet dan kesehatan dengan fitur log kalori, panduan nutrisi, dan kalkulator BMI/BMR.",
-    image: projectDietyuk,
-    tags: ["HTML", "CSS", "JavaScript", "Charts"],
-    demoUrl: "https://desmayanti.github.io/DietYuk-web/",
-    githubUrl: "https://github.com/desmayanti/DietYuk-web",
-  },
-];
+import { motion } from "framer-motion";
+import { ExternalLink, Github, MonitorPlay } from "lucide-react";
+import projectCanuraImage from "@/assets/project-canuraniruang.png";
+import projectDietyukImage from "@/assets/project-dietyuk.png";
 
 const PortfolioSection = () => {
+  const projects = [
+    {
+      title: "CANURANIRUANG",
+      category: "Web Application",
+      description: "A digital room design web application allowing users to visualize and customize interior spaces.",
+      image: projectCanuraImage,
+      tags: ["HTML", "CSS", "JS", "Bootstrap"],
+      link: "#",
+      featured: true,
+    },
+    {
+      title: "DietYuk",
+      category: "Health Platform",
+      description: "Health and nutrition tracking platform to help users monitor their daily intake and achieve fitness goals.",
+      image: projectDietyukImage,
+      tags: ["PHP", "MySQL", "Tailwind", "JS"],
+      link: "#",
+      featured: true,
+    }
+  ];
+
   return (
-    <section id="portfolio" className="py-20 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent" />
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            My <span className="text-primary text-glow-red">Portfolio</span>
-          </h2>
-          <div className="w-24 h-1 bg-primary mx-auto rounded-full box-glow-red" />
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Projects I've worked on during my studies at SMKN 1 Ciomas
-          </p>
-        </div>
+    <section id="portfolio" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden border-none rounded-none py-32 z-30">
+      {/* Background Massive Text (Z-Index 0) */}
+      <div className="absolute inset-0 flex items-center justify-center w-full h-full z-0 pointer-events-none overflow-hidden">
+        <h1 className="text-[20vw] md:text-[15vw] font-display text-[#FDF8E1] tracking-tighter leading-none whitespace-nowrap select-none opacity-20">
+          MY PORTFOLIO
+        </h1>
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="group rounded-xl overflow-hidden card-gradient border border-border hover:border-primary transition-all duration-500"
-            >
-              {/* Project Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
-              </div>
+      {/* Foreground Content (Z-Index 10) */}
+      <div className="relative z-10 w-full px-8 md:px-16 flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="w-full max-w-[90rem] mx-auto py-8"
+        >
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="font-display text-3xl md:text-5xl tracking-wider text-white drop-shadow-lg mb-3">
+              WHAT I'VE <span className="text-[#FDF8E1]">BUILT</span>
+            </h2>
+            <div className="w-16 h-1 bg-white mx-auto rounded-full drop-shadow-md" />
+            <p className="text-white/90 drop-shadow-md mt-6 font-poppins max-w-2xl mx-auto text-sm md:text-lg">
+              Selected projects that showcase my skills in frontend development, design, and full-stack problem solving.
+            </p>
+          </div>
 
-              {/* Project Info */}
-              <div className="p-6">
-                <div className="mb-3">
-                  <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16">
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.2 }}
+                className="group relative rounded-2xl overflow-hidden bg-white/10 border border-white/30 backdrop-blur-md hover:border-white/50 transition-all duration-500 shadow-2xl"
+              >
+                {/* Project Image Container */}
+                <div className="relative h-56 md:h-72 overflow-hidden">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  />
+                  
+                  {/* Overlay Links */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center gap-4 backdrop-blur-sm">
+                    <a href={project.link} className="w-14 h-14 rounded-full bg-[#F37100] flex items-center justify-center text-white hover:scale-110 transition-transform shadow-lg">
+                      <MonitorPlay size={24} />
+                    </a>
+                    <a href="#" className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/40 hover:scale-110 transition-all shadow-lg">
+                      <Github size={24} />
+                    </a>
+                  </div>
+                </div>
+
+                {/* Project Details */}
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[#FDF8E1] text-xs font-poppins font-semibold tracking-wider uppercase drop-shadow-md">
+                      {project.category}
+                    </span>
+                    {project.featured && (
+                      <span className="text-[10px] bg-white/20 text-white px-2 py-1 rounded-full border border-white/30 font-poppins drop-shadow-md">
+                        Featured
+                      </span>
+                    )}
+                  </div>
+                  
+                  <h3 className="font-display text-3xl text-white drop-shadow-md mb-3 group-hover:text-[#FDF8E1] transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground">{project.category}</p>
+                  
+                  <p className="text-white/95 text-sm md:text-base font-poppins leading-relaxed mb-6 drop-shadow-sm">
+                    {project.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag, i) => (
+                      <span 
+                        key={i}
+                        className="text-[11px] font-poppins text-white bg-white/10 border border-white/20 px-3 py-1.5 rounded-md drop-shadow-md"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="px-2 py-1 text-xs rounded-full bg-secondary text-muted-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-3">
-                  <Button variant="glow" size="sm" className="flex-1" asChild>
-                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink size={14} className="mr-1" />
-                      Live Demo
-                    </a>
-                  </Button>
-                  <Button variant="glow-outline" size="sm" className="flex-1" asChild>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github size={14} className="mr-1" />
-                      GitHub
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
